@@ -75,6 +75,64 @@
         "url": "https://www.reddit.com/api/v1/access_token"
       },
       "response": []
+    },
+    {
+      "name": "https://www.reddit.com/password",
+      "_postman_id": "b3dcbd3e-f104-4157-8eba-72c024da231b",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "authority",
+            "value": "www.reddit.com"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36"
+          },
+          {
+            "key": "content-type",
+            "value": "application/x-www-form-urlencoded"
+          },
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "origin",
+            "value": "https://www.reddit.com"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "referer",
+            "value": "https://www.reddit.com/password?experiment_d2x_sso_login_link=enabled&experiment_d2x_am_refactoring=enabled"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-GB,en-US;q=0.9,en;q=0.8"
+          },
+          {
+            "key": "cookie",
+            "value": "edgebucket=2JQZ3P64T6oBMo3McR; csv=1; reddaid=ZPUMR65YYST3UBIA; pc=q8; __aaxsc=2; recent_srs=t5_2qizd%2C; __gads=ID=b0f87dc27f740843:T=1606193918:S=ALNI_MYaIUM9h2SZ_HMDPlUgHeXPgmPHEw; G_ENABLED_IDPS=google; loid=0000000000905yxtmd.2.1606110517000.Z0FBQUFBQmZ2Sk5BbHQzRktXRzlxQS1QZ3lUNm5UM1pRQTRhWmFsRFNKRllHVnBRdW9RUWV0VUw3NEEwSVVmbTMwNWxkVklWTjJ2cE04WktFcDEwZ24zeGJ5LUl2dTA5RHV0QUdLNDVIUEhwQVRmWVRZT2NRaDNQZEtPd0RJYjNfWExpY2haMVZuWFQ; g_state={\"i_t\":1606303908780,\"i_l\":0}; token_v2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDYyMjA5OTAsInN1YiI6Ii1JNGFPc2F1YXp3eXBZVWVvbDNKZ0o4dW1ReWciLCJsb2dnZWRJbiI6ZmFsc2UsInNjb3BlcyI6WyIqIiwiZW1haWwiXX0.4mdu6nwI5yNjeml1kKOK4hihQxz2tI3VUNdzf_XZZY0; aasd=4%7C1606217398971; session_tracker=mhkhapgadeacdflfrk.0.1606217519684.Z0FBQUFBQmZ2Tzh2Sjc0QlAyOFFWc0N1SElDSGdBSy03Q181b2RKM3NHeDl4bVc5Qlp0akRfUEZ3MTFPRWhSbVJxYm1VRXVIc1IzcTZOWk5Vcl85dXY5Yk9sazFDRjJHeVNGZmJRanFaYzg1OGNmbkVoVEY2VTM2RXpBTmFqaHQ1MEtLTFZWYjBvZlY; session=894102da62357c37a67693c0a04806b0685dddc3gASVSQAAAAAAAABKN++8X0dB1+8kxVV8NX2UjAdfY3NyZnRflIwoNmY3YjA3MGM4N2Q2YjRiNjFlMzg1NGU0OTU2N2JkODBmNWExNmQ3ZJRzh5Qu"
+          }
+        ],
+        "url": "https://www.reddit.com/password"
+      },
+      "response": []
     }
   ]
 }
