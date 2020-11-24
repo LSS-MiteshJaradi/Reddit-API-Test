@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "0cd0419b-91a4-420f-82b0-405f9aa61721",
+		"name": "Reddit API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Genrate Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69a92831-b68a-4506-9ef0-5032e9614aed",
+						"exec": [
+							"pm.test(\"Verify HTTP response code is 200\", function () {",
+							"     pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData=pm.response.json();",
+							"",
+							"pm.test(\"Verify that the access token is generated\",function(){",
+							"    responseBody.has(\"access_token\");",
+							"    pm.environment.set(\"access_token\",jsonData.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Ow4J5i2Pqg1PF1yLUJh5PlSFoVIrWQ",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "NdRI9HtKIDnJjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "dipali_sable03",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Dipali@123",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://www.reddit.com/api/v1/access_token",
+					"protocol": "https",
+					"host": [
+						"www",
+						"reddit",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"access_token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
