@@ -142,6 +142,64 @@
         "url": "https://www.reddit.com/password"
       },
       "response": []
+    },
+    {
+      "name": "Collection Information",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "44657f58-72dd-4532-86c1-a8dcf2e4dcee",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "764ccbfe-e62b-40e5-9b36-a521a37ee3c3",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://www.oauth.reddit.com/api/v1/collections/collection?collection_id={{collection_id}}&include_links=true",
+          "protocol": "https",
+          "host": [
+            "www",
+            "oauth",
+            "reddit",
+            "com"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "collections",
+            "collection"
+          ],
+          "query": [
+            {
+              "key": "collection_id",
+              "value": "{{collection_id}}"
+            },
+            {
+              "key": "include_links",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
