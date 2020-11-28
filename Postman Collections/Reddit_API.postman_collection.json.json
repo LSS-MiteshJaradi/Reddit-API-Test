@@ -77,7 +77,7 @@
       "response": []
     },
     {
-      "name": "Get Information for different collection",
+      "name": "Get Information For Different Collection",
       "event": [
         {
           "listen": "test",
