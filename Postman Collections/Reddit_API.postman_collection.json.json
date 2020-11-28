@@ -77,7 +77,7 @@
       "response": []
     },
     {
-      "name": "Get Information For Different Collection",
+      "name": "Get Information For Different Collection for SubReddit",
       "event": [
         {
           "listen": "test",
