@@ -13,13 +13,13 @@
 					"script": {
 						"id": "69a92831-b68a-4506-9ef0-5032e9614aed",
 						"exec": [
-							"pm.test(\"Verify HTTP response code is 200\", function () {",
+							"pm.test(\"C374 Verify HTTP response code is 200\", function () {",
 							"     pm.response.to.have.status(200);",
 							"});",
 							"",
 							"var jsonData=pm.response.json();",
 							"",
-							"pm.test(\"Verify that the access token is generated\",function(){",
+							"pm.test(\"C374 Verify that the access token is generated\",function(){",
 							"    responseBody.has(\"access_token\");",
 							"    pm.environment.set(\"access_token\",jsonData.access_token);",
 							"});"
