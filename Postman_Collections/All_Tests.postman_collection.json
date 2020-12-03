@@ -1,0 +1,1680 @@
+{
+	"info": {
+		"_postman_id": "695398a5-5b61-4f72-8946-90e9b86b3c4a",
+		"name": "All Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "End Points",
+			"item": [
+				{
+					"name": "Generate Token",
+					"item": [
+						{
+							"name": "EP: Generate Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a5a7bef1-a100-473e-bb01-d10eed628360",
+										"exec": [
+											"if(pm.environment.get(\"current_step\") == \"\") pm.environment.set(\"current_step\", pm.info.requestName);",
+											"eval(pm.environment.get(\"verifyHttpResponse200\"))();",
+											"",
+											"var jsonData=pm.response.json();",
+											"",
+											"// Verify Access Token is not null and set it in the Environment",
+											"pm.test(pm.environment.get(\"current_step\") + \": Verify that the access token is generated\",function(){",
+											"    responseBody.has(\"access_token\");",
+											"    pm.expect(jsonData.access_token).not.eq(undefined);",
+											"    pm.environment.set(\"access_token\",jsonData.access_token);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8a50bf7d-4b03-4e21-889d-0b29156718c5",
+										"exec": [
+											"var nextStep = pm.environment.get(\"next_step\");",
+											"if(nextStep !== \"\") postman.setNextRequest(nextStep); ",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "Ow4J5i2Pqg1PF1yLUJh5PlSFoVIrWQ",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "NdRI9HtKIDnJjg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "dipali_sable03",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Dipali@123",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ep_url}}/api/v1/access_token",
+									"host": [
+										"{{ep_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"access_token"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Unvote",
+					"item": [
+						{
+							"name": "EP: Unvote The Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "59076878-7dd4-472b-ab91-985986d85866",
+										"exec": [
+											"console.log(\"HTTP Status:\" + pm.response.code);",
+											"pm.environment.set(\"response_code\", pm.response.code);",
+											"",
+											"if(pm.environment.get(\"current_step\") == \"\") pm.environment.set(\"current_step\", pm.info.requestName);",
+											"eval(pm.environment.get(\"verifyHttpResponse200\"))();"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b7d8bd1f-f1db-460f-9ffb-007f7296a9bf",
+										"exec": [
+											"var postId = pm.environment.get(\"post_id\");",
+											"if(postId == undefined || postId == '') pm.environment.set(\"post_id\", \"t3_k1yv9w\");",
+											"",
+											"const requestBodyParams = {",
+											"    \"id\": pm.environment.get(\"post_id\"),",
+											"    \"dir\": 0",
+											"}",
+											"",
+											"eval(pm.environment.get(\"setRequestBody\"))(requestBodyParams);",
+											"",
+											"var nextStep = pm.environment.get(\"next_step\");",
+											"if(nextStep !== \"\") postman.setNextRequest(nextStep); "
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{payload}}"
+								},
+								"url": {
+									"raw": "{{oauth_url}}/api/vote",
+									"host": [
+										"{{oauth_url}}"
+									],
+									"path": [
+										"api",
+										"vote"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Upvote",
+					"item": [
+						{
+							"name": "EP: Upvote The Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b829bbfb-b8f1-41e8-bc30-17cd9aef0e00",
+										"exec": [
+											"console.log(\"HTTP Status:\" + pm.response.code);",
+											"pm.environment.set(\"response_code\", pm.response.code);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6cf51e17-57cd-4d35-a600-278101ccd453",
+										"exec": [
+											"console.log(pm.environment.get(\"post_id\"));",
+											"",
+											"var postId = pm.environment.get(\"post_id\");",
+											"if(postId == undefined || postId == '') pm.environment.set(\"post_id\", \"t3_k1yv9w\");",
+											"",
+											"const requestBodyParams = {",
+											"    \"id\": pm.environment.get(\"post_id\"),",
+											"    \"dir\": 0",
+											"}",
+											"",
+											"eval(pm.environment.get(\"setRequestBody\"))(requestBodyParams);",
+											"",
+											"console.log(pm.environment.get(\"post_id\"));",
+											"",
+											"var nextStep = pm.environment.get(\"next_step\");",
+											"if(nextStep !== \"\") postman.setNextRequest(nextStep); "
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{payload}}"
+								},
+								"url": {
+									"raw": "{{oauth_url}}/api/vote",
+									"host": [
+										"{{oauth_url}}"
+									],
+									"path": [
+										"api",
+										"vote"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Downvote",
+					"item": [
+						{
+							"name": "EP: Downvote The Post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc6eec59-a967-4d5c-94f3-d93aa24b291d",
+										"exec": [
+											"console.log(\"HTTP Status:\" + pm.response.code);",
+											"pm.environment.set(\"response_code\", pm.response.code);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "489f54f6-27d1-4aeb-a293-f8c12a07ad98",
+										"exec": [
+											"var nextStep = pm.environment.get(\"next_step\");",
+											"if(nextStep !== \"\") postman.setNextRequest(nextStep); "
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id",
+											"value": "{{post_id}}",
+											"type": "text"
+										},
+										{
+											"key": "dir",
+											"value": "-1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{oauth_url}}/api/vote",
+									"host": [
+										"{{oauth_url}}"
+									],
+									"path": [
+										"api",
+										"vote"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get All Posts",
+					"item": [
+						{
+							"name": "EP: Get All Posts For User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9e3e7f16-0a90-499d-bddd-98b5d9ec33ff",
+										"exec": [
+											"if(pm.environment.get(\"current_step\") == \"\") pm.environment.set(\"current_step\", pm.info.requestName);",
+											"eval(pm.environment.get(\"verifyHttpResponse200\"))();",
+											"",
+											"var jsonData=pm.response.json();",
+											"pm.environment.set(\"post_response\", jsonData.posts);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "faa3db85-26a8-4238-ad84-484c2b23fbe5",
+										"exec": [
+											"var nextStep = pm.environment.get(\"next_step\");",
+											"if(nextStep !== \"\") postman.setNextRequest(nextStep); "
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{gateway_url}}/desktopapi/v1/user/dipali_sable03/posts",
+									"host": [
+										"{{gateway_url}}"
+									],
+									"path": [
+										"desktopapi",
+										"v1",
+										"user",
+										"dipali_sable03",
+										"posts"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "BVT",
+			"item": [
+				{
+					"name": "Scenarios",
+					"item": [
+						{
+							"name": "Upvote / Downvote",
+							"item": [
+								{
+									"name": "C497 Verify Upvote Flow",
+									"item": [
+										{
+											"name": "C497 Step 1: Generate Token",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C497 Step 2: Unvote The Post\");",
+															"",
+															"postman.setNextRequest('EP: Generate Access Token');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7a3d3962-98db-47e9-ab82-870723393452",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C497 Step 2: Unvote The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C497 Step 3: Get All Posts For The User\");",
+															"",
+															"postman.setNextRequest('EP: Unvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4e6e79d2-8e2b-4ade-8160-e95acb174bb5",
+														"exec": [
+															"//pm.environment.set(\"post_id\",\"t3_k1yv9w\");",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C497 Step 3: Get All Posts For The User",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C497 Step 4: Verify The Vote State Is Unvoted For The Post\");",
+															"postman.setNextRequest('EP: Get All Posts For User');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C497 Step 4: Verify The Vote State Is Unvoted For The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"",
+															"postman.setNextRequest('C497 Step 5: Upvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C497 Validate vote state is 0 after Unvote\",function(){",
+															"    var postResponse = pm.environment.get(\"post_response\");",
+															"    var postId = pm.environment.get(\"post_id\");",
+															"    ",
+															"    pm.expect(eval(pm.environment.get(\"isPostUnvoted\"))(postResponse, postId));",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C497 Step 5: Upvote The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C497 Step 6: Get All Posts For The User\");",
+															"",
+															"postman.setNextRequest('EP: Upvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4cf4d6f8-7f1c-4f85-b633-54649d01fb03",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C497 Step 6: Get All Posts For The User",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C497 Step 7: Verify The Vote State Is Upvoted For The Post\");",
+															"",
+															"postman.setNextRequest('EP: Get All Posts For User');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C497 Step 7: Verify The Vote State Is Upvoted For The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"",
+															"if(pm.environment.get(\"end_flow\") == \"Verify Upvote Flow\") postman.setNextRequest('End Step: Halt Scenario');",
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C497 Validate vote state is 1 after Upvote\",function(){",
+															"    var postResponse = pm.environment.get(\"post_response\");",
+															"    var postId = pm.environment.get(\"post_id\");",
+															"    console.log(\"Validating upvote for Post Id: \"+ postId);",
+															"    pm.expect(eval(pm.environment.get(\"isPostUpvoted\"))(postResponse, postId));",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{base_url}}",
+													"host": [
+														"{{base_url}}"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "9db892a6-f59f-4d5c-9f6c-1368e1cf56ca",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "28fdac23-d9c8-40c7-b4d9-1d533bc942ed",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "C498 Verify Downvote Flow",
+									"item": [
+										{
+											"name": "C498 Step 1: Generate Token",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C498 Step 2: Unvote The Post\");",
+															"",
+															"postman.setNextRequest('EP: Generate Access Token');"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C498 Step 2: Unvote The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C498 Step 3: Get All Posts For The User\");",
+															"",
+															"postman.setNextRequest('EP: Unvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4e6e79d2-8e2b-4ade-8160-e95acb174bb5",
+														"exec": [
+															"//pm.environment.set(\"post_id\",\"t3_k1yv9w\");",
+															"pm.environment.set(\"post_id\",pm.iterationData.get(\"post_id\"));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C498 Step 3: Get All Posts For The User",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C498 Step 4: Verify The Vote State Is Unvoted For The Post\");",
+															"postman.setNextRequest('EP: Get All Posts For User');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C498 Step 4: Verify The Vote State Is Unvoted For The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"",
+															"postman.setNextRequest('C498 Step 5: Downvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C498 Validate vote state is 0 after Unvote\",function(){",
+															"    var postResponse = pm.environment.get(\"post_response\");",
+															"    var postId = pm.environment.get(\"post_id\");",
+															"    ",
+															"    pm.expect(eval(pm.environment.get(\"isPostUnvoted\"))(postResponse, postId));",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C498 Step 5: Downvote The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C498 Step 6: Get All Posts For The User\");",
+															"",
+															"postman.setNextRequest('EP: Downvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4cf4d6f8-7f1c-4f85-b633-54649d01fb03",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C498 Step 6: Get All Posts For The User",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C498 Step 7: Verify The Vote State Is Downvoted For The Post\");",
+															"",
+															"postman.setNextRequest('EP: Get All Posts For User');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C498 Step 7: Verify The Vote State Is Downvoted For The Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"",
+															"if(pm.environment.get(\"end_flow\") == \"Verify Downvote Flow\") postman.setNextRequest('End Step: Halt Scenario');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C498 Validate vote state is -1 after Downvote\",function(){",
+															"    var postResponse = pm.environment.get(\"post_response\");",
+															"    var postId = pm.environment.get(\"post_id\");",
+															"    console.log(\"Downvoted post_id: \"+ postId);",
+															"    pm.expect(eval(pm.environment.get(\"isPostUpvoted\"))(postResponse, postId));",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2de7a50e-7739-4ef8-9e60-c5e28d531c6a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c5ae37b4-7022-4ddd-a4d4-db93d8263c79",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "32785488-c6f3-41f5-89e4-30aa0bbbaf64",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"post_id\",pm.iterationData.get(\"post_id\"));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ce4a3e72-6a16-4b28-8ba6-c20592e02896",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "End Test Execution",
+			"item": [
+				{
+					"name": "End Step: Halt Scenario",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+								"exec": [
+									"postman.setNextRequest(\"\");",
+									"//throw new Error('halt');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Regression",
+			"item": [
+				{
+					"name": "Scenarios",
+					"item": [
+						{
+							"name": "Upvote / Downvote",
+							"item": [
+								{
+									"name": "C499 Attempt to Upvote An Invalid Post",
+									"item": [
+										{
+											"name": "C499 Step 1: Generate Token",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C499 Step 2: Upvote The Invalid Post\");",
+															"",
+															"postman.setNextRequest('EP: Generate Access Token');"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C499 Step 2: Upvote The Invalid Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C499 Step 3: Verify The Http Status code Is 404\");",
+															"",
+															"postman.setNextRequest('EP: Upvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4cf4d6f8-7f1c-4f85-b633-54649d01fb03",
+														"exec": [
+															"pm.environment.set(\"post_id\",\"t3_k1yv9w99\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C499 Step 3: Verify The Http Status code Is 404",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"",
+															"if(pm.environment.get(\"end_flow\") == \"Attempt to Upvote An Invalid Post\") postman.setNextRequest('End Step: Halt Scenario');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C499 Verify that Status code is 404\", function () {",
+															"    pm.expect(pm.environment.get(\"response_code\")).to.eql(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "C500 Attempt to Downvote A Deleted Post",
+									"item": [
+										{
+											"name": "C500 Step 1: Generate Token",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C500 Step 2: Downvote The Deleted Post\");",
+															"",
+															"postman.setNextRequest('EP: Generate Access Token');"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C500 Step 2: Downvote The Deleted Post",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C500 Step 3: Get All Posts For The User\");",
+															"pm.environment.set(\"post_id\",\"t3_k2icqf\");",
+															"",
+															"postman.setNextRequest('EP: Downvote The Post');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4cf4d6f8-7f1c-4f85-b633-54649d01fb03",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C500 Step 3: Get All Posts For The User",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"pm.environment.set(\"next_step\",\"C500 Step 4: Verify The Vote State Is Not Downvoted\");",
+															"",
+															"postman.setNextRequest('EP: Get All Posts For User');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C500 Verify that Status code is 404\", function () {",
+															"    pm.expect(pm.environment.get(\"response_code\")).to.eql(404);",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "C500 Step 4: Verify The Vote State Is Not Downvoted",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7203f3b3-6b11-4017-96e1-dd4f7e52b5ba",
+														"exec": [
+															"pm.environment.set(\"current_step\", pm.info.requestName);",
+															"",
+															"if(pm.environment.get(\"end_flow\") == \"Attempt to Downvote A Deleted Post\") postman.setNextRequest('End Step: Halt Scenario');"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "00a9ad3d-bb1a-43cd-befe-31c81f8c0f33",
+														"exec": [
+															"pm.test(\"C500 Validate vote state is 0 after Downvote for deleted post\",function(){",
+															"    var postResponse = pm.environment.get(\"post_response\");",
+															"    var postId = pm.environment.get(\"post_id\");",
+															"    ",
+															"    pm.expect(eval(pm.environment.get(\"isPostUnvoted\"))(postResponse, postId));",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost/",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"path": [
+														""
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "26fe3db6-adb7-48ce-8274-1fc627363387",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "713e6448-c7ab-4c77-86b2-8b99d1eb9ed1",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "42d1bd8f-a2a6-4a82-b6d8-1204136355be",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"post_id\",pm.iterationData.get(\"post_id\"));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e160f7b-d917-48ca-b09e-49faea0796d4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Common Methods",
+			"item": [
+				{
+					"name": "Utils",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0be326eb-ae71-46c1-b507-902d89caf459",
+								"exec": [
+									"var setRequestBody = (obj) => {",
+									"    const payload = Object.keys(obj).reduce((acc, cur) => {",
+									"        return `${acc}${cur}=${obj[cur]}&`;",
+									"    }, '');",
+									"    pm.environment.set('payload', payload);",
+									"}",
+									"pm.environment.set(\"setRequestBody\", setRequestBody.toString());",
+									"",
+									"// Verify HTTP Response",
+									"var verifyHttpResponse200 = () => {",
+									"    if(pm.environment.get(\"current_step\") == undefined) pm.environment.set(\"current_step\", \"\");",
+									"    ",
+									"    pm.test(pm.environment.get(\"current_step\") + \": Verify HTTP response code is 200\", function () {",
+									"         pm.response.to.have.status(200);",
+									"    });",
+									"}",
+									"pm.environment.set(\"verifyHttpResponse200\", verifyHttpResponse200.toString());",
+									"",
+									"// Get Post Details",
+									"var getPostDetails = (postResponse, postId, key) =>{",
+									"    var my_post = postResponse[postId]",
+									"    return my_post[key];",
+									"}",
+									"pm.environment.set(\"getPostDetails\", getPostDetails.toString());",
+									"",
+									"// Verify Post is Upvoted",
+									"var isPostUpvoted = (postResponse, postId) =>{",
+									"    var voteStateInResponse = eval(pm.environment.get(\"getPostDetails\"))(postResponse, postId, \"voteState\");",
+									"    var upVotedValue = pm.globals.get(\"UPVOTED_STATE\");",
+									"    return upVotedValue == voteStateInResponse;",
+									"}",
+									"pm.environment.set(\"isPostUpvoted\", isPostUpvoted.toString());",
+									"",
+									"// Verify post is Unvoted",
+									"var isPostUnvoted = (postResponse, postId) =>{",
+									"    var voteStateInResponse = eval(pm.environment.get(\"getPostDetails\"))(postResponse, postId, \"voteState\");",
+									"    var upVotedValue = pm.globals.get(\"UNVOTED_STATE\");",
+									"    return upVotedValue == voteStateInResponse;",
+									"}",
+									"pm.environment.set(\"isPostUnvoted\", isPostUnvoted.toString());",
+									"",
+									"// Verify post is Downvoted",
+									"var isPostDownvoted = (postResponse, postId) =>{",
+									"    var voteStateInResponse = eval(pm.environment.get(\"getPostDetails\"))(postResponse, postId, \"voteState\");",
+									"    var upVotedValue = pm.globals.get(\"DOWNVOTED_STATE\");",
+									"    return upVotedValue == voteStateInResponse;",
+									"}",
+									"pm.environment.set(\"isPostDownvoted\", isPostDownvoted.toString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Experiment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46080f42-5219-475f-ab58-29783d6eb640",
+								"exec": [
+									"// utils = eval(pm.globals.get(\"loadUtils\"));",
+									"// utils.reuseableFunction();",
+									"",
+									"// let obj = {};",
+									"// obj.sayHello('test');",
+									"",
+									"// _.sayHello('test');",
+									"",
+									"//pm.globals.get(\"commonTests\")();",
+									"eval(pm.globals.get(\"commonTests\"))();"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "43c8e482-cf98-4236-8796-a481f2781d22",
+								"exec": [
+									"Object.prototype.sayHello = function(name){",
+									"    console.log('Hello! '+ {name});",
+									"};"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "859c326d-4f7e-4607-b6ce-6fa28c6a43f6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f6188c4d-8b68-4705-80e1-7a7522eabdf1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
